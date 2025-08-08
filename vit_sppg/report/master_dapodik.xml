@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- report qweb view -->
+        <record id="action_report_vit_master_dapodik" model="ir.actions.report">
+            <field name="name">Master Dapodik</field>
+            <field name="model">vit.master_dapodik</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">vit_sppg.vit_master_dapodik_report</field>
+            <field name="report_file">vit_sppg.vit_master_dapodik_report</field>
+            <field name="print_report_name">object.name</field>
+            <field name="binding_model_id" ref="vit_sppg.model_vit_master_dapodik"/>
+            <field name="binding_type">report</field>
+        </record>
+        <!-- document template -->
+        <template id="vit_sppg.vit_master_dapodik_report_document" >
+            <t t-call="web.external_layout">
+                <t t-set="doc" t-value="doc.with_context({'lang': lang})"/>
+                <div class="page">
+                    <h2>
+                        Master Dapodik: <span t-field="doc.name"/>
+                    </h2>
+                    <div class="row mt32 mb32">
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Npsn</strong>
+                            <p class="m-0" t-field="doc.npsn" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Status Kepemilikan</strong>
+                            <p class="m-0" t-field="doc.status_kepemilikan" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Bentuk Pendidikan</strong>
+                            <p class="m-0" t-field="doc.bentuk_pendidikan" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Status Sekolah</strong>
+                            <p class="m-0" t-field="doc.status_sekolah" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Alamat</strong>
+                            <p class="m-0" t-field="doc.alamat" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Lintang</strong>
+                            <p class="m-0" t-field="doc.lintang" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Bujur</strong>
+                            <p class="m-0" t-field="doc.bujur" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Jumlah Pd</strong>
+                            <p class="m-0" t-field="doc.jumlah_pd" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Jumlah Guru</strong>
+                            <p class="m-0" t-field="doc.jumlah_guru" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Jumlah Tendik</strong>
+                            <p class="m-0" t-field="doc.jumlah_tendik" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Update Jumlah Pd</strong>
+                            <p class="m-0" t-field="doc.update_jumlah_pd" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Update Jumlah Tendik</strong>
+                            <p class="m-0" t-field="doc.update_jumlah_tendik" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Provinsi</strong>
+                            <p class="m-0" t-field="doc.provinsi_id"/>
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Kab Kota</strong>
+                            <p class="m-0" t-field="doc.kab_kota_id"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="oe_structure"/>
+            </t>
+        </template>
+
+        <!-- main template -->
+        <template id="vit_sppg.vit_master_dapodik_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-set="lang" t-value="doc.create_uid.lang"/>
+                    <t t-call="vit_sppg.vit_master_dapodik_report_document" />
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

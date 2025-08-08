@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- tree view -->
+        <record id="view_vit_mitra_sppg_tree" model="ir.ui.view">
+            <field name="name">vit_mitra_sppg_tree</field>
+            <field name="model">vit.mitra_sppg</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <tree string="Mitra Sppg">
+                    <field name="name" /> <!-- 100-->
+                    <field name="provinsi_id" /> <!-- 100-->
+                    <field name="id_mitra" /> <!-- 101-->
+                    <field name="kab_kota_id" /> <!-- 101-->
+                    <field name="code" /> <!-- 102-->
+                    <field name="jenis" /> <!-- 103-->
+                    <field name="alamat" /> <!-- 104-->
+                    <field name="status" /> <!-- 105-->
+                    <field name="mulai_opsnal" /> <!-- 106-->
+                    <field name="ka_sppg" /> <!-- 107-->
+                    <field name="hp_sppg" /> <!-- 108-->
+                    <field name="mail_sppg" /> <!-- 109-->
+                    <field name="yayasan" /> <!-- 110-->
+                </tree>
+            </field>
+        </record>
+        <!-- pivot view -->
+        <record id="view_vit_mitra_sppg_pivot" model="ir.ui.view">
+            <field name="name">vit_mitra_sppg_tree</field>
+            <field name="model">vit.mitra_sppg</field>
+            <field name="type">pivot</field>
+            <field name="arch" type="xml">
+                <pivot string="Mitra Sppg">
+                    <field name="provinsi_id" type="row"/>
+                    <field name="kab_kota_id" type="row"/>
+                </pivot>
+            </field>
+        </record>
+        <!-- form view -->
+        <record id="view_vit_mitra_sppg_form" model="ir.ui.view">
+            <field name="name">vit_mitra_sppg_form</field>
+            <field name="model">vit.mitra_sppg</field>
+            <field name="type">form</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <form string="Mitra Sppg">
+                    <header>
+                        <button string="Reload" type="object" name="action_reload_view" icon="fa-refresh"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <!--button type="object" name="action_view_detail" class="oe_stat_button" icon="fa-pencil-square-o"-->
+                                <!--field name="detail_count" widget="statinfo" string="Detail(s)"/-->
+                                <!--field name="detail_ids" invisible="1"/-->
+                            <!--/button-->
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" string="Mitra Sppg Name"/>
+                            <h1><field name="name" /></h1>
+                        </div>
+                        <group>
+                            <group> <!-- left -->
+                                <field name="id_mitra"  />
+                                <field name="code"  />
+                                <field name="jenis"  />
+                                <field name="alamat"  />
+                                <field name="status"  />
+                                <field name="mulai_opsnal"  />
+                                <field name="ka_sppg"  />
+                                <field name="hp_sppg"  />
+                                <field name="mail_sppg"  />
+                                <field name="yayasan"  />
+                            </group>
+                            <group> <!-- right -->
+                                <field name="provinsi_id"  />
+                                <field name="kab_kota_id"  />
+                            </group>
+                        </group>
+                        <notebook>
+                        </notebook>
+                        <group name="note_group" col="6" class="mt-2 mt-md-0">
+                            <group colspan="4">
+                            </group>
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                            </group>
+                            <div class="clearfix"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- search -->
+        <record id="view_vit_mitra_sppg_search" model="ir.ui.view">
+            <field name="name">vit_mitra_sppg</field>
+            <field name="model">vit.mitra_sppg</field>
+            <field name="arch" type="xml">
+                <search string="Mitra Sppg">
+
+                    <filter string="Name" name="filter_by_name" domain="[('name','=','')]" />
+                    <filter string="Id Mitra" name="filter_by_id_mitra" domain="[('id_mitra','=','')]" />
+                    <filter string="Code" name="filter_by_code" domain="[('code','=','')]" />
+                    <filter string="Jenis" name="filter_by_jenis" domain="[('jenis','=','')]" />
+                    <filter string="Alamat" name="filter_by_alamat" domain="[('alamat','=','')]" />
+                    <filter string="Status" name="filter_by_status" domain="[('status','=','')]" />
+                    <filter string="Mulai Opsnal" name="filter_by_mulai_opsnal" domain="[('mulai_opsnal','=','')]" />
+                    <filter string="Ka Sppg" name="filter_by_ka_sppg" domain="[('ka_sppg','=','')]" />
+                    <filter string="Hp Sppg" name="filter_by_hp_sppg" domain="[('hp_sppg','=','')]" />
+                    <filter string="Mail Sppg" name="filter_by_mail_sppg" domain="[('mail_sppg','=','')]" />
+                    <filter string="Yayasan" name="filter_by_yayasan" domain="[('yayasan','=','')]" />
+                    <field name="name" select="True"/>
+                    <field name="id_mitra" select="True"/>
+                    <field name="code" select="True"/>
+                    <field name="jenis" select="True"/>
+                    <field name="alamat" select="True"/>
+                    <field name="status" select="True"/>
+                    <field name="mulai_opsnal" select="True"/>
+                    <field name="ka_sppg" select="True"/>
+                    <field name="hp_sppg" select="True"/>
+                    <field name="mail_sppg" select="True"/>
+                    <field name="yayasan" select="True"/>
+                    <field name="provinsi_id" select="True"/>
+                    <field name="kab_kota_id" select="True"/>
+                    <group string="Group By..">
+                        <filter string="Provinsi" domain="[]" name="group_by_provinsi_id" context="{'group_by':'provinsi_id'}"/>
+                        <filter string="Kab Kota" domain="[]" name="group_by_kab_kota_id" context="{'group_by':'kab_kota_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <!-- kanban , to show image, please add image, image_512, image_1920, or image_small in the model -->
+        <record id="view_vit_mitra_sppg_kanban" model="ir.ui.view" >
+            <field name="name">vit_mitra_sppg</field>
+            <field name="model">vit.mitra_sppg</field>
+            <field name="arch" type="xml">
+                <kanban version="7.0">
+                    <field name="id" />
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_details">
+                                <h4>
+                                    <a type="open"><field name="name"/></a>
+                                </h4>
+                            </div> <!--oe_kanban_details-->
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <!-- graph -->
+        <record id="view_vit_mitra_sppg_graph" model="ir.ui.view">
+            <field name="name">vit_mitra_sppg</field>
+            <field name="model">vit.mitra_sppg</field>
+            <field name="arch" type="xml">
+                <graph string="Mitra Sppg" type="bar">
+                    <field name="provinsi_id"/>
+                </graph>
+            </field>
+        </record>
+        <!-- action window -->
+        <record id="action_mitra_sppg" model="ir.actions.act_window">
+            <field name="name">Mitra Sppg</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">vit.mitra_sppg</field>
+            <field name="view_mode">tree,form,kanban,pivot,graph</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                Click to add a new Mitra Sppg
+                </p><p>
+
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_mitra_sppg" name="Mitra Sppg" parent="vit_sppg_config_menu" action="action_mitra_sppg" sequence="40"/>
+    </data>
+</odoo>

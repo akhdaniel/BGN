@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- tree view -->
+        <!--record id="view_master_kab_kota_tree" model="ir.ui.view">
+            <field name="name">master_kab_kota_tree</field>
+            <field name="model">vit.master_kab_kota</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="vit_sppg.view_vit_master_kab_kota_tree"/>
+            <field name="arch" type="xml">
+            </field>
+        </record-->
+        <!-- form view -->
+        <!-- record id="view_master_kab_kota_form" model="ir.ui.view">
+            <field name="name">master_kab_kota_form</field>
+            <field name="model">vit.master_kab_kota</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="vit_sppg.view_vit_master_kab_kota_form"/>
+            <field name="arch" type="xml">
+            </field>
+        </record-->
+        <!-- search -->
+        <!--record id="view_master_kab_kota_search" model="ir.ui.view">
+            <field name="name">master_kab_kota</field>
+            <field name="model">vit.master_kab_kota</field>
+            <field name="inherit_id" ref="vit_sppg.view_vit_master_kab_kota_search"/>
+            <field name="arch" type="xml">
+            </field>
+        </record-->
+        <!-- action window -->
+        <!--record id="vit_sppg.action_master_kab_kota" model="ir.actions.act_window">
+            <field name="name">Master Kab Kota</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">vit.master_kab_kota</field>
+            <field name="view_mode">tree,form,kanban,pivot,graph</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                Click to add a new Master Kab Kota
+                </p><p>
+
+                </p>
+            </field>
+        </record-->
+
+        <menuitem id="menu_master_kab_kota" name="Master Kab Kota" parent="vit_sppg_config_menu" action="action_master_kab_kota" sequence="30"/>
+    </data>
+</odoo>

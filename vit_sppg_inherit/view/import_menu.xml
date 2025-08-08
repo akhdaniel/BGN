@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="menu_dapodik_root"
+                  parent="vit_sppg.vit_sppg_config_menu"
+                  name="Import"
+                  sequence="100"/>
+
+        <menuitem id="menu_import_mitra_sppg"
+                  name="Mitra SPPG"
+                  parent="menu_dapodik_root"
+                  action="vit_sppg_inherit.action_import_mitra_wizard"
+                  sequence="100"/>
+
+        <menuitem id="menu_import_dapodik"
+                  name="Dapodik"
+                  parent="menu_dapodik_root"
+                  action="vit_sppg_inherit.action_import_dapodik_wizard"
+                  sequence="100"/>
+
+    </data>
+</odoo>

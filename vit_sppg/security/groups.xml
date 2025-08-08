@@ -1,0 +1,17 @@
+<odoo>
+	<data>
+		<record model="ir.module.category" id="module_category_data_sppg_dan_dapodik">
+			<field name="name">Data SPPG dan Dapodik</field>
+			<field name="description">Data SPPG dan Dapodik Groups</field>
+			<field name="sequence">10</field>
+		</record>
+		<record id="group_data_sppg_dan_dapodik_user" model="res.groups">
+			<field name="name">User</field>
+			<field name="category_id" ref="module_category_data_sppg_dan_dapodik"/>
+		</record>
+		<record id="group_data_sppg_dan_dapodik_manager" model="res.groups">
+			<field name="name">Manager</field>
+			<field name="category_id" ref="module_category_data_sppg_dan_dapodik"/>
+		</record>
+	</data>
+</odoo>

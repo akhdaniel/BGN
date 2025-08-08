@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- tree view -->
+        <record id="view_vit_master_dapodik_tree" model="ir.ui.view">
+            <field name="name">vit_master_dapodik_tree</field>
+            <field name="model">vit.master_dapodik</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <tree string="Master Dapodik">
+                    <field name="name" /> <!-- 100-->
+                    <field name="provinsi_id" /> <!-- 100-->
+                    <field name="npsn" /> <!-- 101-->
+                    <field name="kab_kota_id" /> <!-- 101-->
+                    <field name="status_kepemilikan" /> <!-- 102-->
+                    <field name="bentuk_pendidikan" /> <!-- 103-->
+                    <field name="status_sekolah" /> <!-- 104-->
+                    <field name="alamat" /> <!-- 105-->
+                    <field name="lintang" /> <!-- 106-->
+                    <field name="bujur" /> <!-- 107-->
+                    <field name="jumlah_pd" /> <!-- 108-->
+                    <field name="jumlah_guru" /> <!-- 109-->
+                    <field name="jumlah_tendik" /> <!-- 110-->
+                    <field name="update_jumlah_pd" /> <!-- 111-->
+                    <field name="update_jumlah_tendik" /> <!-- 112-->
+                </tree>
+            </field>
+        </record>
+        <!-- pivot view -->
+        <record id="view_vit_master_dapodik_pivot" model="ir.ui.view">
+            <field name="name">vit_master_dapodik_tree</field>
+            <field name="model">vit.master_dapodik</field>
+            <field name="type">pivot</field>
+            <field name="arch" type="xml">
+                <pivot string="Master Dapodik">
+                    <field name="provinsi_id" type="row"/>
+                    <field name="kab_kota_id" type="row"/>
+                </pivot>
+            </field>
+        </record>
+        <!-- form view -->
+        <record id="view_vit_master_dapodik_form" model="ir.ui.view">
+            <field name="name">vit_master_dapodik_form</field>
+            <field name="model">vit.master_dapodik</field>
+            <field name="type">form</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <form string="Master Dapodik">
+                    <header>
+                        <button string="Reload" type="object" name="action_reload_view" icon="fa-refresh"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <!--button type="object" name="action_view_detail" class="oe_stat_button" icon="fa-pencil-square-o"-->
+                                <!--field name="detail_count" widget="statinfo" string="Detail(s)"/-->
+                                <!--field name="detail_ids" invisible="1"/-->
+                            <!--/button-->
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" string="Master Dapodik Name"/>
+                            <h1><field name="name" /></h1>
+                        </div>
+                        <group>
+                            <group> <!-- left -->
+                                <field name="npsn"  />
+                                <field name="status_kepemilikan"  />
+                                <field name="bentuk_pendidikan"  />
+                                <field name="status_sekolah"  />
+                                <field name="alamat"  />
+                                <field name="lintang"  />
+                                <field name="bujur"  />
+                                <field name="jumlah_pd"  />
+                                <field name="jumlah_guru"  />
+                                <field name="jumlah_tendik"  />
+                                <field name="update_jumlah_pd"  />
+                                <field name="update_jumlah_tendik"  />
+                            </group>
+                            <group> <!-- right -->
+                                <field name="provinsi_id"  />
+                                <field name="kab_kota_id"  />
+                            </group>
+                        </group>
+                        <notebook>
+                        </notebook>
+                        <group name="note_group" col="6" class="mt-2 mt-md-0">
+                            <group colspan="4">
+                            </group>
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                            </group>
+                            <div class="clearfix"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- search -->
+        <record id="view_vit_master_dapodik_search" model="ir.ui.view">
+            <field name="name">vit_master_dapodik</field>
+            <field name="model">vit.master_dapodik</field>
+            <field name="arch" type="xml">
+                <search string="Master Dapodik">
+
+                    <filter string="Name" name="filter_by_name" domain="[('name','=','')]" />
+                    <filter string="Npsn" name="filter_by_npsn" domain="[('npsn','=','')]" />
+                    <filter string="Status Kepemilikan" name="filter_by_status_kepemilikan" domain="[('status_kepemilikan','=','')]" />
+                    <filter string="Bentuk Pendidikan" name="filter_by_bentuk_pendidikan" domain="[('bentuk_pendidikan','=','')]" />
+                    <filter string="Status Sekolah" name="filter_by_status_sekolah" domain="[('status_sekolah','=','')]" />
+                    <filter string="Alamat" name="filter_by_alamat" domain="[('alamat','=','')]" />
+                    <filter string="Lintang" name="filter_by_lintang" domain="[('lintang','=','')]" />
+                    <filter string="Bujur" name="filter_by_bujur" domain="[('bujur','=','')]" />
+                    <filter string="Jumlah Pd" name="filter_by_jumlah_pd" domain="[('jumlah_pd','=','')]" />
+                    <filter string="Jumlah Guru" name="filter_by_jumlah_guru" domain="[('jumlah_guru','=','')]" />
+                    <filter string="Jumlah Tendik" name="filter_by_jumlah_tendik" domain="[('jumlah_tendik','=','')]" />
+                    <filter string="Update Jumlah Pd" name="filter_by_update_jumlah_pd" domain="[('update_jumlah_pd','=','')]" />
+                    <filter string="Update Jumlah Tendik" name="filter_by_update_jumlah_tendik" domain="[('update_jumlah_tendik','=','')]" />
+                    <field name="name" select="True"/>
+                    <field name="npsn" select="True"/>
+                    <field name="status_kepemilikan" select="True"/>
+                    <field name="bentuk_pendidikan" select="True"/>
+                    <field name="status_sekolah" select="True"/>
+                    <field name="alamat" select="True"/>
+                    <field name="lintang" select="True"/>
+                    <field name="bujur" select="True"/>
+                    <field name="jumlah_pd" select="True"/>
+                    <field name="jumlah_guru" select="True"/>
+                    <field name="jumlah_tendik" select="True"/>
+                    <field name="update_jumlah_pd" select="True"/>
+                    <field name="update_jumlah_tendik" select="True"/>
+                    <field name="provinsi_id" select="True"/>
+                    <field name="kab_kota_id" select="True"/>
+                    <group string="Group By..">
+                        <filter string="Provinsi" domain="[]" name="group_by_provinsi_id" context="{'group_by':'provinsi_id'}"/>
+                        <filter string="Kab Kota" domain="[]" name="group_by_kab_kota_id" context="{'group_by':'kab_kota_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <!-- kanban , to show image, please add image, image_512, image_1920, or image_small in the model -->
+        <record id="view_vit_master_dapodik_kanban" model="ir.ui.view" >
+            <field name="name">vit_master_dapodik</field>
+            <field name="model">vit.master_dapodik</field>
+            <field name="arch" type="xml">
+                <kanban version="7.0">
+                    <field name="id" />
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_details">
+                                <h4>
+                                    <a type="open"><field name="name"/></a>
+                                </h4>
+                            </div> <!--oe_kanban_details-->
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <!-- graph -->
+        <record id="view_vit_master_dapodik_graph" model="ir.ui.view">
+            <field name="name">vit_master_dapodik</field>
+            <field name="model">vit.master_dapodik</field>
+            <field name="arch" type="xml">
+                <graph string="Master Dapodik" type="bar">
+                    <field name="provinsi_id"/>
+                </graph>
+            </field>
+        </record>
+        <!-- action window -->
+        <record id="action_master_dapodik" model="ir.actions.act_window">
+            <field name="name">Master Dapodik</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">vit.master_dapodik</field>
+            <field name="view_mode">tree,form,kanban,pivot,graph</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                Click to add a new Master Dapodik
+                </p><p>
+
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_master_dapodik" name="Master Dapodik" parent="vit_sppg_config_menu" action="action_master_dapodik" sequence="50"/>
+    </data>
+</odoo>
