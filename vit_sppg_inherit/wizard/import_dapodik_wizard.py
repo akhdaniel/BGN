@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 import base64
 import csv
@@ -30,13 +29,8 @@ class ImportDapodikWizard(models.TransientModel):
 
     file_data = fields.Binary(string='File', required=True)
     file_name = fields.Char(string='File Name')
-    batch_size = fields.Integer(string='Batch Size', default=1000, 
-                               help="Number of records to process in each batch")
-    update_mode = fields.Selection([
-        ('create_only', 'Create New Records Only'),
-        ('update_only', 'Update Existing Records Only'),
-        ('create_update', 'Create New and Update Existing')
-    ], default='create_update', string='Import Mode')
+    # Removed fields to avoid database upgrade issues
+    # batch_size and update_mode will be hardcoded for now
 
     def _to_int(self, value):
         """Helper to safely convert string to integer."""
@@ -60,6 +54,81 @@ class ImportDapodikWizard(models.TransientModel):
             return 'xls'
         else:
             return 'csv'
+
+    def _to_float(self, value):
+        """Helper to safely convert string to float."""
+        try:
+            return float(value) if value else 0.0
+        except (ValueError, TypeError):
+            return 0.0
+
+    def _normalize_name(self, name):
+        """Normalize name for consistent matching"""
+        if not name:
+            return ""
+        
+        # Convert to uppercase
+        normalized = str(name).strip().upper()
+        
+        # Remove "PROV.", "PROVINSI", "PROP.", etc.
+        prefixes_to_remove = ['PROV.', 'PROVINSI', 'PROP.', 'PROV', 'PROP']
+        for prefix in prefixes_to_remove:
+            if normalized.startswith(prefix):
+                normalized = normalized[len(prefix):].strip()
+                break
+        
+        # Remove dots and normalize spacing
+        normalized = normalized.replace('.', '')
+        
+        # Handle specific cases
+        name_mappings = {
+            'DKI JAKARTA': 'DKI JAKARTA',
+            'D K I JAKARTA': 'DKI JAKARTA', 
+            'DI YOGYAKARTA': 'DI YOGYAKARTA',
+            'D I YOGYAKARTA': 'DI YOGYAKARTA',
+            'KEP BANGKA BELITUNG': 'KEPULAUAN BANGKA BELITUNG',
+            'BANGKA BELITUNG': 'KEPULAUAN BANGKA BELITUNG',
+            'KEP RIAU': 'KEPULAUAN RIAU',
+            'SULAWESI UTARA': 'SULAWESI UTARA',
+            'SULUT': 'SULAWESI UTARA',
+            'SULAWESI SELATAN': 'SULAWESI SELATAN', 
+            'SULSEL': 'SULAWESI SELATAN',
+            'SULAWESI TENGAH': 'SULAWESI TENGAH',
+            'SULTENG': 'SULAWESI TENGAH',
+            'SULAWESI TENGGARA': 'SULAWESI TENGGARA',
+            'SULTRA': 'SULAWESI TENGGARA',
+            'SULAWESI BARAT': 'SULAWESI BARAT',
+            'SULBAR': 'SULAWESI BARAT',
+            'KALIMANTAN UTARA': 'KALIMANTAN UTARA',
+            'KALUT': 'KALIMANTAN UTARA',
+            'KALIMANTAN TIMUR': 'KALIMANTAN TIMUR',
+            'KALTIM': 'KALIMANTAN TIMUR',
+            'KALIMANTAN SELATAN': 'KALIMANTAN SELATAN',
+            'KALSEL': 'KALIMANTAN SELATAN',
+            'KALIMANTAN TENGAH': 'KALIMANTAN TENGAH',
+            'KALTENG': 'KALIMANTAN TENGAH',
+            'KALIMANTAN BARAT': 'KALIMANTAN BARAT',
+            'KALBAR': 'KALIMANTAN BARAT',
+            'NUSA TENGGARA BARAT': 'NUSA TENGGARA BARAT',
+            'NTB': 'NUSA TENGGARA BARAT',
+            'NUSA TENGGARA TIMUR': 'NUSA TENGGARA TIMUR', 
+            'NTT': 'NUSA TENGGARA TIMUR',
+            'PAPUA BARAT': 'PAPUA BARAT',
+            'PAPBAR': 'PAPUA BARAT',
+            'PAPUA BARAT DAYA': 'PAPUA BARAT DAYA',
+            'PAPUA TENGAH': 'PAPUA TENGAH',
+            'PAPUA PEGUNUNGAN': 'PAPUA PEGUNUNGAN',
+            'PAPUA SELATAN': 'PAPUA SELATAN'
+        }
+        
+        # Check if normalized name exists in mapping
+        if normalized in name_mappings:
+            return name_mappings[normalized]
+            
+        # Clean up multiple spaces
+        normalized = ' '.join(normalized.split())
+        
+        return normalized# -*- coding: utf-8 -*-
 
     def _read_excel_file(self, raw_bytes, file_type):
         """Read Excel file and convert to list of rows - OPTIMIZED"""
@@ -161,12 +230,14 @@ class ImportDapodikWizard(models.TransientModel):
         # Load provinsi
         provinsi_records = self.env['vit.master_provinsi'].search([])
         for rec in provinsi_records:
-            existing_data['provinsi'][rec.name.lower()] = rec
+            normalized_name = self._normalize_name(rec.name)
+            existing_data['provinsi'][normalized_name] = rec
         
         # Load kab/kota
         kab_kota_records = self.env['vit.master_kab_kota'].search([])
         for rec in kab_kota_records:
-            key = (rec.name.lower(), rec.provinsi_id.id)
+            normalized_name = self._normalize_name(rec.name)
+            key = (normalized_name, rec.provinsi_id.id)
             existing_data['kab_kota'][key] = rec
         
         # Load dapodik
@@ -179,6 +250,10 @@ class ImportDapodikWizard(models.TransientModel):
 
     def _process_batch(self, batch_data, existing_data):
         """Process a batch of records efficiently"""
+        # Hardcoded settings to avoid database upgrade issues
+        batch_size = 1000  # Can be adjusted as needed
+        update_mode = 'create_update'  # create_only, update_only, or create_update
+        
         provinsi_to_create = []
         kab_kota_to_create = []
         dapodik_to_create = []
@@ -203,45 +278,49 @@ class ImportDapodikWizard(models.TransientModel):
                 
                 npsn = str(row[4]).strip()
                 name = str(row[5]).strip() 
-                provinsi_name = str(row[1]).strip()
-                kab_kota_name = str(row[2]).strip()
+                provinsi_name = self._normalize_name(str(row[1]).strip())
+                kab_kota_name = self._normalize_name(str(row[2]).strip())
                 
                 if not all([npsn, name, provinsi_name, kab_kota_name]):
                     batch_stats['skipped'] += 1
                     continue
 
                 # --- Process Provinsi ---
-                provinsi_key = provinsi_name.lower()
+                provinsi_key = provinsi_name  # Already normalized
                 provinsi = existing_data['provinsi'].get(provinsi_key)
                 
                 if not provinsi:
                     # Check if already queued for creation in this batch
-                    existing_queued = next((p for p in provinsi_to_create if p['name'].lower() == provinsi_key), None)
+                    existing_queued = next((p for p in provinsi_to_create if self._normalize_name(p['name']) == provinsi_key), None)
                     if not existing_queued:
-                        provinsi_data = {'name': provinsi_name}
+                        # Store original name for database, but use normalized for lookup
+                        original_name = str(row[1]).strip()  # Keep original formatting for database
+                        provinsi_data = {'name': original_name}
                         provinsi_to_create.append(provinsi_data)
                         # Create temporary record for this batch
-                        provinsi = type('obj', (object,), {'id': f'temp_{len(provinsi_to_create)}', 'name': provinsi_name})()
+                        provinsi = type('obj', (object,), {'id': f'temp_{len(provinsi_to_create)}', 'name': original_name})()
                         existing_data['provinsi'][provinsi_key] = provinsi
                     else:
                         provinsi = existing_data['provinsi'][provinsi_key]
 
                 # --- Process Kab/Kota ---
-                kab_kota_key = (kab_kota_name.lower(), provinsi.id)
+                kab_kota_key = (kab_kota_name, provinsi.id)  # Already normalized
                 kab_kota = existing_data['kab_kota'].get(kab_kota_key)
                 
                 if not kab_kota:
                     existing_queued = next((k for k in kab_kota_to_create 
-                                         if k['name'].lower() == kab_kota_name.lower() 
+                                         if self._normalize_name(k['name']) == kab_kota_name 
                                          and k['provinsi_id'] == provinsi.id), None)
                     if not existing_queued:
+                        # Store original name for database
+                        original_kab_kota_name = str(row[2]).strip()
                         kab_kota_data = {
-                            'name': kab_kota_name,
+                            'name': original_kab_kota_name,
                             'provinsi_id': provinsi.id
                         }
                         kab_kota_to_create.append(kab_kota_data)
                         # Create temporary record for this batch
-                        kab_kota = type('obj', (object,), {'id': f'temp_{len(kab_kota_to_create)}', 'name': kab_kota_name})()
+                        kab_kota = type('obj', (object,), {'id': f'temp_{len(kab_kota_to_create)}', 'name': original_kab_kota_name})()
                         existing_data['kab_kota'][kab_kota_key] = kab_kota
                     else:
                         kab_kota = existing_data['kab_kota'][kab_kota_key]
@@ -261,17 +340,17 @@ class ImportDapodikWizard(models.TransientModel):
                     'jumlah_tendik': self._to_int(row[14]),
                     'update_jumlah_pd': self._to_int(row[16]),
                     'update_jumlah_tendik': self._to_int(row[18]),
-                    'provinsi_id': provinsi.id,
+                    # 'provinsi_id': provinsi.id,
                     'kab_kota_id': kab_kota.id,
                 }
 
                 existing_dapodik = existing_data['dapodik'].get(npsn)
                 
-                if existing_dapodik and self.update_mode in ['update_only', 'create_update']:
+                if existing_dapodik and update_mode in ['update_only', 'create_update']:
                     dapodik_vals['id'] = existing_dapodik.id
                     dapodik_to_update.append(dapodik_vals)
                     batch_stats['updated'] += 1
-                elif not existing_dapodik and self.update_mode in ['create_only', 'create_update']:
+                elif not existing_dapodik and update_mode in ['create_only', 'create_update']:
                     dapodik_to_create.append(dapodik_vals)
                     batch_stats['created'] += 1
                 else:
@@ -292,8 +371,8 @@ class ImportDapodikWizard(models.TransientModel):
                 
                 # Update cache with real IDs
                 for i, provinsi in enumerate(created_provinsi):
-                    old_key = provinsi.name.lower()
-                    existing_data['provinsi'][old_key] = provinsi
+                    normalized_key = self._normalize_name(provinsi.name)
+                    existing_data['provinsi'][normalized_key] = provinsi
             
             # Create missing kab/kota
             if kab_kota_to_create:
@@ -311,7 +390,8 @@ class ImportDapodikWizard(models.TransientModel):
                 
                 # Update cache
                 for kab_kota in created_kab_kota:
-                    key = (kab_kota.name.lower(), kab_kota.provinsi_id.id)
+                    normalized_key = self._normalize_name(kab_kota.name)
+                    key = (normalized_key, kab_kota.provinsi_id.id)
                     existing_data['kab_kota'][key] = kab_kota
             
             # Update dapodik provinsi_id and kab_kota_id if needed
@@ -388,6 +468,7 @@ class ImportDapodikWizard(models.TransientModel):
             batch_data = []
             row_number = 0
             header_skipped = False
+            batch_size = 1000  # Hardcoded batch size
             
             for row in rows_generator:
                 row_number += 1
@@ -401,8 +482,8 @@ class ImportDapodikWizard(models.TransientModel):
                 batch_data.append((row_number, row))
                 
                 # Process batch when full
-                if len(batch_data) >= self.batch_size:
-                    _logger.info(f"Processing batch {total_stats['total_rows']//self.batch_size} ({len(batch_data)} records)")
+                if len(batch_data) >= batch_size:
+                    _logger.info(f"Processing batch {total_stats['total_rows']//batch_size} ({len(batch_data)} records)")
                     
                     batch_stats = self._process_batch(batch_data, existing_data)
                     
@@ -437,7 +518,7 @@ class ImportDapodikWizard(models.TransientModel):
         success_message = (
             f"Import completed!\n"
             f"File: {file_type.upper()} ({len(raw_bytes)//1024//1024}MB)\n"
-            f"Mode: {dict(self._fields['update_mode'].selection)[self.update_mode]}\n"
+            f"Mode: Create and Update\n"
             f"Total rows: {total_stats['total_rows']:,}\n"
             f"Processed: {total_stats['processed']:,}\n"
             f"Created: {total_stats['created']:,}\n"
