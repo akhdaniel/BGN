@@ -341,9 +341,12 @@ class ImportDapodikWizard(models.TransientModel):
                     'update_jumlah_pd': self._to_int(row[16]),
                     'update_jumlah_tendik': self._to_int(row[18]),
                     # 'provinsi_id': provinsi.id,
-                    'kab_kota_id': kab_kota.id,
+                   # 'kab_kota_id': kab_kota.id,
                 }
-
+                if kab_kota.name == 'TASIKMALAYA' and kab_kota.name != str(row[2]).strip():
+                    kab_kota = self.env['vit.master_kab_kota'].search([('name','ilike',str(row[2]).strip()),('provinsi_id','!=',False)],limit=1)
+                    if kab_kota:
+                        dapodik_vals['kab_kota_id'] = kab_kota.id
                 existing_dapodik = existing_data['dapodik'].get(npsn)
                 
                 if existing_dapodik and update_mode in ['update_only', 'create_update']:
