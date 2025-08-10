@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- action window -->
+        <record id="action_provinsi" model="ir.actions.act_window">
+            <field name="name">Provinsi</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">vit.master_provinsi</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                Click to add a new Provinsi
+                </p><p>
+
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_provinsi" name="Provinsi" parent="vit_sppg_summary_config_menu" action="action_provinsi" sequence="20"/>
+    </data>
+</odoo>

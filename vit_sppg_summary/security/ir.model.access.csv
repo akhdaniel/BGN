@@ -1,0 +1,4 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_user_vit_rekap_potensi_mbg,access_user_vit_rekap_potensi_mbg,model_vit_rekap_potensi_mbg,vit_sppg_summary.group_summary_report_user,1,0,0,0
+access_manager_vit_rekap_potensi_mbg,access_manager_vit_rekap_potensi_mbg,model_vit_rekap_potensi_mbg,vit_sppg_summary.group_summary_report_manager,1,1,1,1
+access_admin_vit_rekap_potensi_mbg,access_admin_vit_rekap_potensi_mbg,model_vit_rekap_potensi_mbg,base.group_system,1,1,1,1

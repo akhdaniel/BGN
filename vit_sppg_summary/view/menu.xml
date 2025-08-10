@@ -1,0 +1,7 @@
+<odoo>
+	<data>
+		<menuitem id="vit_sppg_summary_top_menu" name="Summary Report" sequence="20" web_icon="vit_sppg_summary,static/description/icon.png" />
+		<menuitem id="vit_sppg_summary_sub_menu" name="Operations" sequence="40" parent="vit_sppg_summary_top_menu" />
+		<menuitem id="vit_sppg_summary_config_menu" name="Configurations" sequence="1000" parent="vit_sppg_summary_top_menu" />
+	</data>
+</odoo>

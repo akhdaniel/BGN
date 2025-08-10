@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- report qweb view -->
+        <record id="action_report_vit_rekap_potensi_mbg" model="ir.actions.report">
+            <field name="name">Rekap Potensi Mbg</field>
+            <field name="model">vit.rekap_potensi_mbg</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">vit_sppg_summary.vit_rekap_potensi_mbg_report</field>
+            <field name="report_file">vit_sppg_summary.vit_rekap_potensi_mbg_report</field>
+            <field name="print_report_name">object.name</field>
+            <field name="binding_model_id" ref="vit_sppg_summary.model_vit_rekap_potensi_mbg"/>
+            <field name="binding_type">report</field>
+        </record>
+        <!-- document template -->
+        <template id="vit_sppg_summary.vit_rekap_potensi_mbg_report_document" >
+            <t t-call="web.external_layout">
+                <t t-set="doc" t-value="doc.with_context({'lang': lang})"/>
+                <div class="page">
+                    <h2>
+                        Rekap Potensi Mbg: <span t-field="doc.name"/>
+                    </h2>
+                    <div class="row mt32 mb32">
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Potensi Penerima Siswa</strong>
+                            <p class="m-0" t-field="doc.potensi_penerima_siswa" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Potensi Penerima Bumil</strong>
+                            <p class="m-0" t-field="doc.potensi_penerima_bumil" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Potensi Penerima Busui</strong>
+                            <p class="m-0" t-field="doc.potensi_penerima_busui" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Potensi Penerima Balita</strong>
+                            <p class="m-0" t-field="doc.potensi_penerima_balita" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Potensi Penerima Total</strong>
+                            <p class="m-0" t-field="doc.potensi_penerima_total" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Total Penerima Mbg</strong>
+                            <p class="m-0" t-field="doc.total_penerima_mbg" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Prosentase Penerima Mbg</strong>
+                            <p class="m-0" t-field="doc.prosentase_penerima_mbg" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Rencana Dapur Mbg</strong>
+                            <p class="m-0" t-field="doc.rencana_dapur_mbg" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Jumlah Sppg Aktif</strong>
+                            <p class="m-0" t-field="doc.jumlah_sppg_aktif" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Prosentase Dapur Mbg</strong>
+                            <p class="m-0" t-field="doc.prosentase_dapur_mbg" />
+                        </div>
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Name</strong>
+                            <p class="m-0" t-field="doc.name"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="oe_structure"/>
+            </t>
+        </template>
+
+        <!-- main template -->
+        <template id="vit_sppg_summary.vit_rekap_potensi_mbg_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-set="lang" t-value="doc.create_uid.lang"/>
+                    <t t-call="vit_sppg_summary.vit_rekap_potensi_mbg_report_document" />
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- tree view -->
+        <!--record id="view_rekap_potensi_mbg_tree" model="ir.ui.view">
+            <field name="name">rekap_potensi_mbg_tree</field>
+            <field name="model">vit.rekap_potensi_mbg</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="vit_sppg_summary.view_vit_rekap_potensi_mbg_tree"/>
+            <field name="arch" type="xml">
+            </field>
+        </record-->
+        <!-- form view -->
+        <!-- record id="view_rekap_potensi_mbg_form" model="ir.ui.view">
+            <field name="name">rekap_potensi_mbg_form</field>
+            <field name="model">vit.rekap_potensi_mbg</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="vit_sppg_summary.view_vit_rekap_potensi_mbg_form"/>
+            <field name="arch" type="xml">
+            </field>
+        </record-->
+        <!-- search -->
+        <!--record id="view_rekap_potensi_mbg_search" model="ir.ui.view">
+            <field name="name">rekap_potensi_mbg</field>
+            <field name="model">vit.rekap_potensi_mbg</field>
+            <field name="inherit_id" ref="vit_sppg_summary.view_vit_rekap_potensi_mbg_search"/>
+            <field name="arch" type="xml">
+            </field>
+        </record-->
+        <!-- action window -->
+        <!--record id="vit_sppg_summary.action_rekap_potensi_mbg" model="ir.actions.act_window">
+            <field name="name">Rekap Potensi Mbg</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">vit.rekap_potensi_mbg</field>
+            <field name="view_mode">tree,form,kanban,pivot,graph</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                Click to add a new Rekap Potensi Mbg
+                </p><p>
+
+                </p>
+            </field>
+        </record-->
+
+        <menuitem id="menu_rekap_potensi_mbg" name="Rekap Potensi Mbg" parent="vit_sppg_summary_config_menu" action="action_rekap_potensi_mbg" sequence="30"/>
+    </data>
+</odoo>
