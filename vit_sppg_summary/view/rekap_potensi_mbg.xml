@@ -96,14 +96,14 @@
                     <filter string="Potensi Penerima Bumil" name="filter_by_potensi_penerima_bumil" domain="[('potensi_penerima_bumil','=','')]" />
                     <filter string="Potensi Penerima Busui" name="filter_by_potensi_penerima_busui" domain="[('potensi_penerima_busui','=','')]" />
                     <filter string="Potensi Penerima Balita" name="filter_by_potensi_penerima_balita" domain="[('potensi_penerima_balita','=','')]" />
-                    <filter string="Potensi Penerima Total" name="filter_by_potensi_penerima_total" domain="[('potensi_penerima_total','=','')]" />
+                    <filter string="Total Penerima Mbg" name="filter_by_total_penerima_mbg" domain="[('total_penerima_mbg','=','')]" />
                     <filter string="Rencana Dapur Mbg" name="filter_by_rencana_dapur_mbg" domain="[('rencana_dapur_mbg','=','')]" />
                     <filter string="Jumlah Sppg Aktif" name="filter_by_jumlah_sppg_aktif" domain="[('jumlah_sppg_aktif','=','')]" />
                     <field name="potensi_penerima_siswa" select="True"/>
                     <field name="potensi_penerima_bumil" select="True"/>
                     <field name="potensi_penerima_busui" select="True"/>
                     <field name="potensi_penerima_balita" select="True"/>
-                    <field name="potensi_penerima_total" select="True"/>
+                    <field name="total_penerima_mbg" select="True"/>
                     <field name="rencana_dapur_mbg" select="True"/>
                     <field name="jumlah_sppg_aktif" select="True"/>
                     <field name="name" select="True"/>

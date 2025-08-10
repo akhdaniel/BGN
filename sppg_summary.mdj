@@ -1037,7 +1037,6 @@
 								"$ref": "AAAAAAGYkdvhA3qV0eM="
 							},
 							"name": "total_penerima_mbg",
-							"documentation": "{",
 							"type": "Integer"
 						},
 						{
@@ -1087,7 +1086,7 @@
 								"$ref": "AAAAAAGYkdvhA3qV0eM="
 							},
 							"name": "_get_total",
-							"documentation": "{\n\"@api.depends\":[\"potensi_penerima_siswa\",\"potensi_penerima_bumil\",\"potensi_penerima_busui\",\"potensi_penerima_balita\"]\n}"
+							"documentation": "{\n\"@api.depends\":[\"potensi_penerima_siswa\",\"potensi_penerima_bumil\",\"potensi_penerima_busui\",\"potensi_penerima_balita\",\"total_penerima_mbg\"]\n}"
 						},
 						{
 							"_type": "UMLOperation",

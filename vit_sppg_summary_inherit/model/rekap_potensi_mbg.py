@@ -10,7 +10,7 @@ class rekap_potensi_mbg(models.Model):
     _name = "vit.rekap_potensi_mbg"
     _inherit = "vit.rekap_potensi_mbg"
 
-    @api.depends("potensi_penerima_siswa","potensi_penerima_bumil","potensi_penerima_busui","potensi_penerima_balita")
+    @api.depends("potensi_penerima_siswa","potensi_penerima_bumil","potensi_penerima_busui","potensi_penerima_balita","total_penerima_mbg")
     def _get_total(self, ):
         """
         {
